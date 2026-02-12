@@ -1,0 +1,39 @@
+# Vite cache
+.vite/
+
+# Build output
+dist/
+dist-ssr/
+
+# Node modules
+node_modules/
+
+# Local env files
+.env.local
+.env.*
+*.local
+
+# Editor settings
+.vscode/
+!.vscode/extensions.json
+.idea/
+.DS_Store
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# TypeScript artifacts
+*.tsbuildinfo
+
+# System files
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

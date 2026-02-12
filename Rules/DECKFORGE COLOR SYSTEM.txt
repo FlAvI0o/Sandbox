@@ -1,0 +1,237 @@
+--DIRECTED BY FLAVIO DONNINI--
+
+
+🧱 1. Core Palette
+White — #ffffff
+my canvas.
+my identity.
+Everything breathes because of this.
+
+Soft Black — #0a0a0a
+Primary text.
+Strong, confident, premium.
+Not pure black — softened for elegance.
+
+Gray 1 — #111111
+Used for heavy headlines or strong emphasis.
+Adds weight without switching to dark mode.
+
+Gray 2 — #1a1a1a
+Used for subtle UI elements:
+
+borders
+
+dividers
+
+card outlines
+
+section separators
+
+Gray 3 — #e5e5e5
+Used for:
+
+card backgrounds
+
+soft section blocks
+
+subtle contrast
+
+editorial structure
+
+Gray 4 — #f5f5f5
+Used for:
+
+light background blocks
+
+breathing room
+
+soft contrast sections
+
+Accent Purple — #6d28d9
+My ONLY accent color.
+Used sparingly.
+Used intentionally.
+Used for:
+
+CTAs
+
+highlights
+
+key brand moments
+
+🧭 2. Usage Rules
+Rule 1 — White is the default background
+Every page starts white.
+Every section breathes.
+This is my editorial foundation.
+
+Rule 2 — Black is the voice
+Typography is the anchor.
+Strong, minimal, premium.
+
+Rule 3 — Purple is sacred
+Used  only when something truly matters:
+
+main CTA
+
+key highlight
+
+brand signature moments
+
+Never overuse it.
+Never decorate with it.
+
+Rule 4 — Grays create structure
+Grays are your scaffolding.
+They separate sections without breaking the white theme.
+
+Rule 5 — No other colors
+DeckForge is monochrome + purple.
+No blues.
+No reds.
+No greens.
+No gradients.
+No color noise.
+
+🧩 3. Functional Color Logic
+Text
+Primary: #0a0a0a
+
+Secondary: #111111
+
+Muted: #6b7280
+
+Microcopy: #9ca3af
+
+Backgrounds
+Main: #ffffff
+
+Section: #f5f5f5
+
+Card: #ffffff with #e5e5e5 border
+
+Borders
+#e5e5e5 (default)
+
+#1a1a1a (rare, strong emphasis)
+
+Buttons
+Primary CTA
+
+Background: #6d28d9
+
+Text: #ffffff
+
+Hover: slightly darker purple
+
+Secondary CTA
+
+Background: transparent
+
+Border: #1a1a1a
+
+Text: #0a0a0a
+
+🎬 4. Emotional Tone
+the color palette must always feel:
+
+clean
+
+editorial
+
+premium
+
+handcrafted
+
+minimal
+
+founder‑led
+
+trustworthy
+
+modern
+
+Nothing loud.
+Nothing playful.
+Nothing startup‑y.
+
+This is a studio, not a SaaS.
+
+🚫 5. Forbidden Colors
+These break the DeckForge identity instantly:
+
+neon anything
+
+saturated colors
+
+gradients
+
+blue default links
+
+red error states (use muted gray instead)
+
+green success states (use subtle black text instead)
+
+yellow highlights
+
+orange accents
+
+DeckForge is white + black + purple.
+Nothing else.
+
+🖼️ 6. Image Treatment
+Founder Photos
+natural colors
+
+slight desaturation
+
+no filters
+
+no warm tones
+
+no cinematic darkening
+
+keep the white theme intact
+
+Project Images
+place inside white frames
+
+avoid overly colorful screenshots
+
+keep everything neutral and premium
+
+🎞️ 7. Motion + Color Integration
+Motion must respect the white theme:
+
+soft fades
+
+gentle rises
+
+no dark overlays
+
+no color‑changing animations
+
+no purple flashes
+
+no heavy shadows
+
+Motion should feel editorial, not cinematic‑dark.
+
+⭐ 8. The DeckForge Color Philosophy
+my palette is designed to:
+
+make  typography feel sharp
+
+make  motion feel handcrafted
+
+make  brand feel premium
+
+make  identity feel founder‑led
+
+avoid the “AI template” look
+
+avoid the “dark SaaS” aesthetic
+
+create clarity and trust
+
+DeckForge is white, minimal, intentional, premium.

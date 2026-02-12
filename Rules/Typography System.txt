@@ -1,0 +1,197 @@
+--DIRECTED BY FLAVIO DONNINI--
+
+
+🅰️ Primary Typeface — “Inter” (or current font)
+Clean, modern, neutral.
+Doesn’t try to be artistic.
+Lets the motion and layout do the talking.
+
+Weights you use:
+900 — Hero headlines
+
+700 — Section titles
+
+500 — Body emphasis
+
+400 — Body text
+
+300 — Subtle UI text
+
+Rules:
+No italics
+
+No letter‑spacing hacks
+
+No mixed fonts
+
+Keep everything clean and intentional
+
+🅱️ Headline Style
+Hero Headline
+Weight: 900
+
+Size: clamp(2.5rem, 6vw, 4.5rem)
+
+Line-height: 1.05
+
+Tracking: -0.02em
+
+Tone: cinematic, heavy, confident
+
+Usage:  
+Your main statements.
+Your identity.
+Your “Directed by Flavio Donnini” moments.
+
+🅾️ Section Titles
+Weight: 700
+
+Size: clamp(1.5rem, 3vw, 2.25rem)
+
+Line-height: 1.15
+
+Tracking: -0.01em
+
+Usage:  
+Breaks the page into chapters.
+Keeps rhythm and hierarchy.
+
+✏️ Body Text
+Weight: 400
+
+Size: 1rem–1.125rem
+
+Line-height: 1.6–1.75
+
+Color: #e5e5e5 (soft white)
+
+Rules:
+
+Never pure white (#fff)
+
+Never too small
+
+Keep paragraphs short
+
+Use spacing, not indentation
+
+🔍 Microcopy
+Weight: 300
+
+Size: 0.875rem
+
+Color: #9ca3af (gray-400)
+
+Usage:
+
+Labels
+
+Captions
+
+Subtle UI text
+
+Footnotes
+
+2. Color System
+🎨 Core Palette
+Black: #0a0a0a
+
+Soft White: #e5e5e5
+
+Gray 1: #1a1a1a
+
+Gray 2: #262626
+
+Gray 3: #404040
+
+Rules:
+No bright colors
+
+No gradients
+
+No neon
+
+Keep everything matte, cinematic, and minimal
+
+3. Spacing & Layout
+📏 Vertical Rhythm
+Use your Spacer component with these values:
+
+8px — micro
+
+16px — small
+
+32px — medium
+
+48px — large
+
+64px — section spacing
+
+96px — hero spacing
+
+Rules:
+Never mix random spacing
+
+Keep everything divisible by 8
+
+Use more space than you think
+
+Let the layout breathe
+
+4. Motion Integration
+Typography + motion must feel like one system.
+
+Rules:
+Headlines rise slower
+
+Body text rises faster
+
+Microcopy fades, doesn’t move
+
+No bounce
+
+No spring
+
+No random durations
+
+5. Image Treatment
+📸 Founder Photos
+Neutral expression
+
+Cinematic background
+
+Slight desaturation
+
+Slight contrast boost
+
+No filters
+
+No heavy edits
+
+📐 Cropping
+Keep head in upper third
+
+--Made By Flavio Donnini--
+
+Leave breathing room
+
+Avoid extreme close‑ups
+
+6. Tone & Voice
+Your typography supports your voice:
+
+direct
+
+minimal
+
+confident
+
+founder‑coded
+
+no fluff
+
+no corporate tone
+
+Short sentences.
+Strong statements.
+Clear hierarchy.
