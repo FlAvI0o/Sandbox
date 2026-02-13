@@ -86,4 +86,6 @@ function renderConfessionGate() {
 }
 
 // Init
-renderConfessionGate();
+document.addEventListener('DOMContentLoaded', () => {
+    renderConfessionGate();
+});
