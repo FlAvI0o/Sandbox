@@ -1,112 +1,105 @@
 import * as THREE from 'three';
-import vertex from './Shaders/vertex.glsl?raw';
-import fragment from './Shaders/fragment.glsl?raw';
+// We use ?raw to force Vite to load these as pure strings. No plugins. No slop.
+import vertexShader from '../shaders/vertex.glsl?raw';
+import fragmentShader from '../shaders/fragment.glsl?raw';
 
 export default class World {
+    private container: HTMLElement;
     private scene: THREE.Scene;
     private camera: THREE.PerspectiveCamera;
     private renderer: THREE.WebGLRenderer;
-    private container: HTMLElement;
+    
+    private material!: THREE.ShaderMaterial;
     private mesh!: THREE.Mesh;
-    private mouse = new THREE.Vector2();
-    private target = new THREE.Vector2();
-    private rafId: number = 0;
-    private currentState: number = 0;
-    private targetState: number = 0;
+
+    // Telemetry & Physics
+    private clock: THREE.Clock;
+    private targetMouse: THREE.Vector2;
+    private currentMouse: THREE.Vector2;
 
     constructor(container: HTMLElement) {
         this.container = container;
-        
-        // 1. SETUP
         this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.001, 100);
-        this.camera.position.z = 1; // Close up for impact
-
-        this.renderer = new THREE.WebGLRenderer({ 
-            antialias: true,
-            alpha: true 
-        });
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        container.appendChild(this.renderer.domElement);
-
-        // 2. THE ARENA MESH
-        this.addObjects();
-
-        // 3. EVENTS
-        window.addEventListener('resize', this.resize.bind(this));
-        window.addEventListener('mousemove', this.onMouseMove.bind(this));
         
-        // 4. START LOOP
+        // 1. The Camera (Tight FOV for monolithic scale)
+        this.camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 100);
+        this.camera.position.z = 6;
+
+        // 2. The Renderer (Raw, uncompromising black)
+        this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Cap at 2 for performance
+        this.renderer.setClearColor(0x000000, 1);
+        this.container.appendChild(this.renderer.domElement);
+
+        // 3. Physics Initialization
+        this.clock = new THREE.Clock();
+        this.targetMouse = new THREE.Vector2(0, 0);
+        this.currentMouse = new THREE.Vector2(0, 0);
+
+        this.constructMass();
+        this.bindEvents();
         this.render();
     }
 
-    private addObjects() {
-        // High segment count (128) is CRITICAL for the "Puncture" effect
-        const geometry = new THREE.PlaneGeometry(3, 3, 128, 128); 
-        
-        const material = new THREE.ShaderMaterial({
-            vertexShader: vertex,
-            fragmentShader: fragment,
+    private constructMass() {
+        // High density geometry required for smooth vertex displacement
+        const geometry = new THREE.IcosahedronGeometry(1.5, 128);
+
+        this.material = new THREE.ShaderMaterial({
+            vertexShader,
+            fragmentShader,
             uniforms: {
                 uTime: { value: 0 },
                 uMouse: { value: new THREE.Vector2(0, 0) },
-                uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
+                uResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) },
+                uState: { value: 0.0 } // 0 = Idle Mass, 1.0 = Perfect Signal (Solid)
             },
-            // side: THREE.DoubleSide // Optional: if you want to see the back of the wound
+            transparent: true,
+            wireframe: false,
         });
 
-        this.mesh = new THREE.Mesh(geometry, material);
+        this.mesh = new THREE.Mesh(geometry, this.material);
         this.scene.add(this.mesh);
     }
 
-    private onMouseMove(e: MouseEvent) {
-        // Map mouse to -1 to 1
-        this.target.x = (e.clientX / window.innerWidth) * 2 - 1;
-        this.target.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    private bindEvents() {
+        window.addEventListener('resize', () => {
+            this.camera.aspect = window.innerWidth / window.innerHeight;
+            this.camera.updateProjectionMatrix();
+            this.renderer.setSize(window.innerWidth, window.innerHeight);
+            this.material.uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
+        });
+
+        window.addEventListener('mousemove', (e) => {
+            // Normalize mouse to -1 to +1
+            this.targetMouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+            this.targetMouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        });
     }
 
-    private resize() {
-        if (!this.renderer) return;
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.camera.aspect = window.innerWidth / window.innerHeight;
-        this.camera.updateProjectionMatrix();
-        
-        // Update shader resolution
-        const mat = this.mesh.material as THREE.ShaderMaterial;
-        mat.uniforms.uResolution.value.set(window.innerWidth, window.innerHeight);
-    }
+    private render = () => {
+        const elapsedTime = this.clock.getElapsedTime();
 
-    private render() {
-        if (!this.mesh) return;
-        this.rafId = requestAnimationFrame(this.render.bind(this));
+        // THE HEAVY FRICTION (The core of the luxury feel)
+        // 0.02 is a very slow lerp. It feels heavy, like pulling a magnet through oil.
+        this.currentMouse.lerp(this.targetMouse, 0.02);
 
-        // SMOOTH TRANSITION of the Soul
-        // This makes the blood slowly boil into gold. It's not instant.
-        this.currentState += (this.targetState - this.currentState) * 0.02;
+        // Update Uniforms
+        this.material.uniforms.uTime.value = elapsedTime;
+        this.material.uniforms.uMouse.value.copy(this.currentMouse);
 
-        const mat = this.mesh.material as THREE.ShaderMaterial;
-        mat.uniforms.uTime.value += 0.01;
-        mat.uniforms.uMouse.value.copy(this.mouse);
-        
-        // PASS THE STATE TO SHADER
-        // Ensure you added uState: { value: 0 } to your uniforms in createProtocolNode/addObjects!
-        if (mat.uniforms.uState) {
-            mat.uniforms.uState.value = this.currentState;
-        }
+        // Rotate the entire mass slowly based on the reluctant mouse position
+        this.mesh.rotation.y = this.currentMouse.x * 0.5;
+        this.mesh.rotation.x = -this.currentMouse.y * 0.5;
 
         this.renderer.render(this.scene, this.camera);
+        requestAnimationFrame(this.render);
     }
-
-    public destroy() {
-        cancelAnimationFrame(this.rafId);
-        window.removeEventListener('resize', this.resize.bind(this));
-        window.removeEventListener('mousemove', this.onMouseMove.bind(this));
-        if (this.container && this.renderer.domElement) {
-            this.container.removeChild(this.renderer.domElement);
-        }
-        this.renderer.dispose();
+    
+    // We will call this from main.ts when they confess the flaw
+    public setSignalState(value: number) {
+        // We will lerp this value later to snap the mass into perfection
+        this.material.uniforms.uState.value = value;
     }
-    public setPhase(phase: number) {
-    this.targetState = phase;}
 }
