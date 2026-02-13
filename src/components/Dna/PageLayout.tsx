@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import Footer from "../Dna/Footer";
 import initBackground from "./Background/HomeBackground.js";
 
 import { mountCoherenceEngine } from '../Dna/Background/main.js'; // Imports the JS logic
