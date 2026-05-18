@@ -13,7 +13,7 @@ if (!container || !interactionNode || !coordReadout || !hairX || !hairY) {
     throw new Error("CRITICAL: DOM infrastructure missing.");
 }
 
-// 2. Ignite the Engine
+// 2. start the Engine
 const engine = new World(container);
 
 const shakeKeyframes: Keyframe[] = [
@@ -45,7 +45,7 @@ window.addEventListener('mousemove', (e) => {
     coordReadout.innerText = `X:${x} Y:${y}`;
 });
 
-// 4. The Confession Gate (The Filter)
+// 4. The  Gate (A Filter)
 function renderConfessionGate() {
     interactionNode!.innerHTML = `
         <label style="display: block; margin-bottom: 15px; color: #888;">
