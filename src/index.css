@@ -4,7 +4,6 @@ body, html {
   overflow: hidden; 
   background-color: #000000; /* Absolute Black */
   color: #ffffff;
-  /* Use a premium geometric sans-serif or refined serif here eventually */
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
 }
 
