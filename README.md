@@ -1,73 +1,33 @@
-# React + TypeScript + Vite
+# Experimental WebGL Telemetry Gateway
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+An interactive, low-latency interface that couples real-time DOM telemetry tracking with GPU-driven geometric deformations using Three.js and custom GLSL shaders.
 
-Currently, two official plugins are available:
+## 1. System Architecture
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+The runtime relies on two core logical nodes that synchronize via linear interpolation (Lerp) and continuous uniform updates to the GPU:
 
-## React Compiler
+* **DOM Telemetry Input (`main.ts`):** Manages high-frequency cursor tracking, coordinate string formatting for crosshair rendering, and input gate validation.
+* **WebGL Graphics Engine (`World.ts`):** Initializes the 3D pipeline, instantiates a high-density vertex mesh (128-subdivision Icosahedron), and drives inertial rotation based on cursor telemetry.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 2. Core Mechanics
 
-## Expanding the ESLint configuration
+* **Linear Interpolation Influx (Lerp Core):** Cursors and global system state transitions bypass rigid snapping. Deformations utilize a linear interpolation layer (coefficients: `0.02` for mouse vectors, `0.03` for global states) to yield fluid, inertial behaviors.
+* **Rigid String Validation:** System state mutates only when text strings submitted to the input buffer pass explicit quantitative criteria (`length >= 15`).
+* **Sussultatory DOM Shockwave (Shake Engine):** Invalid input signatures invoke immediate physical feedback. The WebGL container is distorted through an asynchronous native animation loop (`translate3d` and `rotate`).
+* **Geometric Signal Collapse:** Upon valid input commitment, the `uState` uniform mutates, signaling the GLSL shaders to transition the fluid, turbulent vertex mass into a static, stable geometric solid.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 3. Technology Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* **Runtime/Language:** TypeScript / Vite
+* **3D Engine:** Three.js (WebGL backend)
+* **Shaders:** GLSL (Custom Vertex & Fragment Shaders)
+* **Animation Pipeline:** Web Animations API (Native DOM Level)
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 4. Local Installation & Development
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+```bash
+# Clone and install dependencies
+npm install
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+# Boot local development server
+npm run dev
